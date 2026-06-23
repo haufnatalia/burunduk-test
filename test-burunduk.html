@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вісім днів із життя Бурундука — тест на розуміння</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#2b2350; --night2:#3d3470;
+    --cream:#fbf3e0; --bg:#f1e6cf;
+    --chip:#c8693b; --chip2:#e8a06b;
+    --leaf:#5a8d54; --leaf-bg:#e6f0df;
+    --berry:#b8506a; --berry-bg:#fbe4ea;
+    --gold:#f0c24a;
+    --ink:#2f2a28; --muted:#7a6f63; --line:#e6d8bd;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 500px at 80% -10%, #fff6e3 0%, transparent 60%),
+      var(--bg);
+    line-height:1.55;
+    padding:18px;
+    min-height:100vh;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+
+  /* ---------- Banner ---------- */
+  .banner{
+    position:relative;
+    background:linear-gradient(160deg,var(--night) 0%,var(--night2) 100%);
+    border-radius:26px;
+    padding:30px 26px 26px;
+    overflow:hidden;
+    color:#fff;
+    box-shadow:0 16px 40px rgba(43,35,80,.28);
+  }
+  .stars{position:absolute;inset:0;pointer-events:none}
+  .stars b{position:absolute;background:var(--gold);border-radius:50%;opacity:.85;
+    box-shadow:0 0 6px var(--gold);animation:twinkle 3.4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:.95;transform:scale(1)}}
+  .egg-glow{
+    position:absolute;right:24px;top:50%;transform:translateY(-50%);
+    width:74px;height:96px;border-radius:50% 50% 48% 48%/60% 60% 40% 40%;
+    background:radial-gradient(circle at 38% 34%,#fffdf4,#f6e6b8 60%,#e9c879);
+    box-shadow:0 0 34px rgba(240,194,74,.65), inset -6px -8px 16px rgba(180,140,40,.25);
+    animation:float 5s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(-52%)}50%{transform:translateY(-44%)}}
+  .eyebrow{font-family:'Rubik';font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.72rem;color:var(--gold);margin:0 0 6px}
+  .banner h1{font-family:'Rubik';font-weight:900;margin:0;font-size:1.75rem;line-height:1.12;max-width:78%}
+  .banner .by{margin:8px 0 0;font-size:.95rem;opacity:.82;max-width:78%}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--cream);
+    border:2px solid var(--line);
+    border-radius:22px;
+    padding:24px 22px;
+    margin-top:18px;
+    box-shadow:0 10px 26px rgba(120,90,40,.10);
+    animation:rise .4s ease both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .lede{font-size:1.05rem;margin:0 0 14px}
+  .how{background:#fff;border:1px dashed var(--chip2);border-radius:14px;padding:14px 16px;margin:14px 0 18px;font-size:.96rem}
+  .how b{color:var(--chip)}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    font-family:'Rubik';font-weight:700;font-size:1.02rem;
+    border:none;border-radius:14px;padding:14px 22px;cursor:pointer;
+    background:var(--chip);color:#fff;transition:transform .12s,box-shadow .12s,filter .12s;
+    box-shadow:0 6px 0 #9e4f29;
+  }
+  .btn:hover{filter:brightness(1.04)}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #9e4f29}
+  .btn.ghost{background:#fff;color:var(--chip);box-shadow:0 6px 0 var(--line);border:1px solid var(--line)}
+  .btn.ghost:active{box-shadow:0 2px 0 var(--line)}
+  .btn:disabled{opacity:.55;cursor:default;box-shadow:none;transform:none}
+  .row-end{display:flex;justify-content:flex-end;margin-top:18px}
+  .center{text-align:center}
+
+  /* ---------- Progress ---------- */
+  .prog{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .prog .label{font-family:'Rubik';font-weight:700;font-size:.85rem;color:var(--muted);white-space:nowrap}
+  .dots{display:flex;flex-wrap:wrap;gap:6px}
+  .dots i{width:13px;height:16px;border-radius:50% 50% 46% 46%/62% 62% 38% 38%;
+    background:#e7dcc4;display:inline-block;transition:background .25s,transform .25s}
+  .dots i.done{background:var(--gold)}
+  .dots i.now{background:var(--chip);transform:scale(1.18)}
+
+  .tag{display:inline-block;font-family:'Rubik';font-weight:700;font-size:.66rem;letter-spacing:.1em;
+    text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px}
+  .tag.plot{background:#eef3ff;color:#4a5fb0}
+  .tag.sense{background:#f3eaff;color:#7a4fb0}
+
+  .q{font-family:'Rubik';font-weight:700;font-size:1.22rem;margin:0 0 16px;line-height:1.3}
+  .hint{font-size:.92rem;color:var(--muted);margin:-6px 0 14px}
+
+  /* ---------- Options ---------- */
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    text-align:left;font-family:'Nunito';font-weight:700;font-size:1.02rem;
+    background:#fff;border:2px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;
+    transition:border-color .12s,background .12s,transform .08s;display:flex;gap:12px;align-items:flex-start}
+  .opt:hover:not(:disabled){border-color:var(--chip2);transform:translateY(-1px)}
+  .opt:disabled{cursor:default}
+  .opt .mk{flex:0 0 26px;height:26px;border-radius:8px;background:var(--bg);
+    display:grid;place-items:center;font-family:'Rubik';font-weight:900;color:var(--muted);font-size:.9rem}
+  .opt.correct{border-color:var(--leaf);background:var(--leaf-bg)}
+  .opt.correct .mk{background:var(--leaf);color:#fff}
+  .opt.wrong{border-color:var(--berry);background:var(--berry-bg)}
+  .opt.wrong .mk{background:var(--berry);color:#fff}
+
+  /* ---------- Feedback ---------- */
+  .fb{margin-top:16px;border-radius:14px;padding:14px 16px;font-size:.97rem;animation:rise .3s ease both}
+  .fb.good{background:var(--leaf-bg);border:1px solid var(--leaf)}
+  .fb.bad{background:var(--berry-bg);border:1px solid var(--berry)}
+  .fb .head{font-family:'Rubik';font-weight:900;display:block;margin-bottom:4px}
+  .fb.good .head{color:var(--leaf)}
+  .fb.bad .head{color:var(--berry)}
+
+  /* ---------- Matching ---------- */
+  .match{display:flex;flex-direction:column;gap:12px}
+  .match .pair{display:flex;flex-direction:column;gap:6px;background:#fff;border:2px solid var(--line);
+    border-radius:14px;padding:12px 14px}
+  .match .who{font-family:'Rubik';font-weight:700;font-size:1.05rem}
+  .match select{font-family:'Nunito';font-weight:600;font-size:.98rem;padding:10px 12px;
+    border:2px solid var(--line);border-radius:10px;background:#fdf8ee;color:var(--ink);width:100%}
+  .match .pair.correct{border-color:var(--leaf);background:var(--leaf-bg)}
+  .match .pair.wrong{border-color:var(--berry);background:var(--berry-bg)}
+  .match .sol{font-size:.9rem;color:var(--leaf);font-weight:700;margin-top:4px}
+
+  /* ---------- Ordering ---------- */
+  .order{display:flex;flex-direction:column;gap:10px}
+  .order .item{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--line);
+    border-radius:14px;padding:10px 12px}
+  .order .num{flex:0 0 30px;height:30px;border-radius:9px;background:var(--chip);color:#fff;
+    display:grid;place-items:center;font-family:'Rubik';font-weight:900}
+  .order .txt{flex:1;font-weight:700;font-size:.98rem}
+  .order .arrows{display:flex;flex-direction:column;gap:4px}
+  .order .arrows button{width:34px;height:24px;border:1px solid var(--line);background:var(--bg);
+    border-radius:8px;cursor:pointer;font-weight:900;color:var(--chip);line-height:1}
+  .order .arrows button:hover{background:#fff}
+  .order .arrows button:disabled{opacity:.3;cursor:default}
+  .order .item.correct{border-color:var(--leaf);background:var(--leaf-bg)}
+  .order .item.correct .num{background:var(--leaf)}
+  .order .item.wrong{border-color:var(--berry);background:var(--berry-bg)}
+  .order .item.wrong .num{background:var(--berry)}
+
+  /* ---------- Results ---------- */
+  .score-big{font-family:'Rubik';font-weight:900;font-size:3.4rem;color:var(--chip);line-height:1;text-align:center;margin:6px 0 2px}
+  .score-sub{text-align:center;color:var(--muted);font-weight:700;margin:0 0 6px}
+  .verdict{font-family:'Rubik';font-weight:900;font-size:1.3rem;text-align:center;margin:10px 0 4px}
+  .verdict-txt{text-align:center;margin:0 auto 18px;max-width:90%}
+  .bars{display:flex;flex-direction:column;gap:16px;margin:18px 0}
+  .bar .top{display:flex;justify-content:space-between;font-family:'Rubik';font-weight:700;font-size:.95rem;margin-bottom:6px}
+  .bar .track{height:16px;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:20px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .bar.plot .fill{background:linear-gradient(90deg,#6f86d6,#4a5fb0)}
+  .bar.sense .fill{background:linear-gradient(90deg,#b07ad6,#7a4fb0)}
+  .bar .note{font-size:.9rem;color:var(--muted);margin-top:5px}
+  .reflect{background:var(--night);color:#fff;border-radius:18px;padding:20px 20px;margin-top:20px}
+  .reflect h3{font-family:'Rubik';font-weight:900;margin:0 0 6px;font-size:1.12rem;color:var(--gold)}
+  .reflect p.intro{margin:0 0 12px;opacity:.85;font-size:.95rem}
+  .reflect ol{margin:0;padding-left:20px}
+  .reflect li{margin:0 0 10px;font-size:1rem}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin:22px 0 6px}
+
+  .hidden{display:none !important}
+  @media (max-width:480px){
+    .banner h1{font-size:1.45rem;max-width:70%}
+    .banner .by{max-width:70%}
+    .egg-glow{width:58px;height:76px;right:16px}
+    .score-big{font-size:2.9rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="banner">
+    <div class="stars" id="stars"></div>
+    <div class="egg-glow"></div>
+    <p class="eyebrow">Тест-пригода 🐿️</p>
+    <h1>Вісім днів із життя Бурундука</h1>
+    <p class="by">за повістю Івана Андрусяка · перевір, наскільки добре ти зрозумів книжку</p>
+  </div>
+
+  <!-- INTRO -->
+  <div class="card" id="intro">
+    <p class="lede">Привіт! Це маленький квест по книжці про Івася Бондарука — хлопчика, якого дражнили Бурундуком. Він знайшов чарівне яєчко-зніщє й цілий тиждень мовчав, щоб вивести з нього чортика-антипка та виконати всі свої бажання…</p>
+    <div class="how">
+      <b>Як проходити:</b> на кожне завдання обери або склади відповідь. Після кожного питання з'явиться підказка-пояснення — навіть якщо помилишся, дізнаєшся, як було насправді. У кінці побачиш, наскільки добре ти зрозумів(ла) книжку.
+    </div>
+    <div class="center"><button class="btn" id="start">Почати пригоду →</button></div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card hidden" id="quiz">
+    <div class="prog">
+      <span class="label" id="progLabel">Питання 1</span>
+      <span class="dots" id="dots"></span>
+    </div>
+    <div id="qbody"></div>
+    <div id="feedback"></div>
+    <div class="row-end" id="navRow"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card hidden" id="results"></div>
+
+  <footer>Зроблено за книжкою Івана Андрусяка «Вісім днів із життя Бурундука»</footer>
+</div>
+
+<script>
+/* ---------- stars in banner ---------- */
+(function(){
+  const s=document.getElementById('stars');let html='';
+  const pts=[[10,20,2],[22,60,3],[34,30,2],[46,72,2],[58,18,3],[8,80,2],[40,52,2],[26,12,2],[52,40,3],[16,42,2]];
+  pts.forEach(([l,t,sz],i)=>{html+=`<b style="left:${l}%;top:${t}%;width:${sz}px;height:${sz}px;animation-delay:${i*0.3}s"></b>`;});
+  s.innerHTML=html;
+})();
+
+/* ---------- data ---------- */
+// cat: 'plot' = події та герої, 'sense' = розуміння сенсу
+const QUESTIONS = [
+  {type:'mc',cat:'plot',q:'Чому хлопчика дражнять «Бурундуком»?',
+   opts:['Бо його прізвище Бондарук схоже на «бурундук», та й він трохи щокатий','Бо він збирає горіхи на зиму','Бо він найшвидше всіх бігає','Бо він живе в лісі у бабусі'],a:0,
+   why:'Насправді його звати Івась Бондарук, і він трохи товстенький — звідси й це образливе прізвисько.'},
+
+  {type:'mc',cat:'plot',q:'З чого все почалося — чому Івасеві було так соромно на самому початку?',
+   opts:['Він не забив легкий гол у футболі, і його прогнали з поля','Він отримав двійку з математики','Він посварився з бабусею','Він загубив телефон'],a:0,
+   why:'Через дівчинку, яка дивилася на нього, він промазав повз м’яч — і вирішив якось змити цю «ганьбу».'},
+
+  {type:'mc',cat:'plot',q:'Що таке «зніщє» (його ще звуть «зносок»)?',
+   opts:['Золоте яйце з казки','Маленьке останнє яєчко, яке курка несе наостанок','Шоколадне яйце із сюрпризом','Камінчик, схожий на яйце'],a:1,
+   why:'Бабуся пояснила: це справжнє, але дуже маленьке яєчко, яке курка несе останнім.'},
+
+  {type:'mc',cat:'plot',q:'Кого, за бабусиною казкою, можна вивести зі зніща?',
+   opts:['Золоту рибку','Курча-зозулю','Маленького домашнього чортика — антипка','Доброго чарівника'],a:2,
+   why:'За старим повір’ям, антипко нібито в усьому допомагає своєму господареві.'},
+
+  {type:'mc',cat:'plot',q:'Яку умову треба виконати, щоб вивести антипка?',
+   opts:['Сім днів мовчати й гріти яйце під пахвою','Сім днів нічого не їсти','Закопати яйце в саду на тиждень','Щодня казати чарівне слово'],a:0,
+   why:'Саме тому Івась носив яйце у ваті під лівою пахвою й намагався ні з ким не розмовляти.'},
+
+  {type:'mc',cat:'sense',q:'Навіщо Івасеві взагалі здався той антипко?',
+   opts:['Щоб подарувати його сестричці Любі','Щоб усі його бажання здійснювалися і його більше не дражнили й поважали','Щоб налякати однокласників','Щоб продати й купити мобілку'],a:1,
+   why:'Він мріяв стати «героєм», якого всі поважають, щоб ніхто більше не сміявся з нього.'},
+
+  {type:'match',cat:'plot',q:'З’єднай героя з його описом.',
+   pairs:[
+     {left:'Люба',right:'молодша сестричка, яка «здала» Івася батькам'},
+     {left:'Іванюк',right:'найкращий футболіст у класі'},
+     {left:'Оленка Зайко',right:'сусідка по парті, що хотіла зробити перев’язку'},
+     {left:'Бабуся',right:'розповіла казку про антипка'}
+   ],
+   why:'Саме Люба випадково розбовкала таємницю, через що про яйце дізналася вся школа.'},
+
+  {type:'order',cat:'plot',q:'Постав події у правильному порядку — від першої до останньої.',
+   items:[
+     'Івась не забив гол у футболі',
+     'Знайшов дивне яєчко в бабусиному курнику',
+     'Почав мовчати й носити яйце під пахвою',
+     'На фізкультурі хлопці навалилися — і випав молочний зуб',
+     'Яйце нарешті тріснуло, і він викинув його'
+   ],
+   why:'Спершу — ганьба з голом, тоді знахідка яйця, потім тиждень мовчанки, бійка із зубом і вже наприкінці — тріснуте яйце.'},
+
+  {type:'tf',cat:'plot',q:'Івась сам розповів усьому класу про чарівне яйце.',
+   a:false,
+   why:'Ні. Таємницю розбовкала Люба братикові Оленки — Максимові, а далі дізналася вся школа.'},
+
+  {type:'mc',cat:'plot',q:'Замість англійського слова, яке не знав Іванюк, Івась написав на дошці…',
+   opts:['HELLO','FITTER (слюсар)','TEACHER','FOOTBALL'],a:1,
+   why:'Говорити було не можна, тож Івась написав слово крейдою — і отримав за це дванадцятку.'},
+
+  {type:'mc',cat:'plot',q:'Під час бійки на фізкультурі почувся хрускіт «ХРУСЬ». Що ж хруснуло?',
+   opts:['Тріснуло яйце','У Івася випав молочний зуб','Зламалася парта','Порвалася куртка'],a:1,
+   why:'Усі злякалися за яйце, а насправді хруснув останній молочний зуб — яйце лишилося ціле.'},
+
+  {type:'mc',cat:'sense',q:'Що Івась зрозумів про людей, які кричали на нього й хотіли забрати яйце?',
+   opts:['Що вони злі й заздрять йому','Що їм просто нудно','Що насправді вони хвилювалися за нього й хотіли допомогти','Що вони хочуть собі такого ж антипка'],a:2,
+   why:'Він зрозумів, що батьки, вчителі й навіть однокласники намагалися його врятувати.'},
+
+  {type:'mc',cat:'sense',q:'Як зрозуміти слова: «Погані люди кричать тоді, коли їм кричиться; а добрі — коли їм бракує слів»?',
+   opts:['Хороші люди ніколи не кричать','Добрі люди підвищують голос від хвилювання й любові, коли не знають, як інакше допомогти','Кричати — це завжди погано','Треба кричати голосніше за всіх'],a:1,
+   why:'Крик батьків був не від злості, а від страху й любові — вони дуже хвилювалися за сина.'},
+
+  {type:'mc',cat:'sense',q:'Чому наприкінці яйце тріснуло саме тоді, коли дівчинка сказала: «А ти класний, Іване»?',
+   opts:['Він упав на сходах','Хтось його штовхнув','Він відкрив рота, щоб відповісти — тобто заговорив, і умова мовчанки порушилась','Яйце просто було старе'],a:2,
+   why:'Від щирих приємних слів Івась хотів відповісти — і за мить його радості зніщє хруснуло.'},
+
+  {type:'mc',cat:'sense',q:'За що Івасеві довелося «заплатити» в кінці книжки?',
+   opts:['Його вигнали зі школи','Він захворів на ангіну, бо з’їв аж п’ять пачок морозива','Він загубив гроші на мобілку','Він посварився з Іванюком'],a:1,
+   why:'Він навмисне хотів захворіти — і таки захворів, тож усі канікули провів у ліжку.'},
+
+  {type:'mc',cat:'sense',q:'А тепер найголовніше: яка, на твою думку, головна думка цієї книжки?',
+   opts:[
+     'Чари завжди допомагають здійснити будь-яке бажання',
+     'Мовчати дуже корисно для здоров’я',
+     'Не варто шукати легкого чарівного шляху — справжню повагу й щастя дають чесні зусилля, рідні люди й добре сумління',
+     'Молодші сестри завжди все псують'
+   ],a:2,
+   why:'Івась хотів усього й одразу, та зрозумів: за все в житті треба платити чесно, а близькі люди важливіші за будь-які чари.'}
+];
+
+const REFLECT = [
+  'Якби ти знайшов(ла) таке яєчко, яке бажання попросив(ла) би в антипка? І чи варто було б це робити?',
+  'Як ти думаєш, чому Івась усе ж пішов до школи попросити вибачення, а не поїхав з батьками до бабусі відпочивати?',
+  'Чи бувало тобі прикро, коли когось дражнять? Що б ти порадив(ла) Івасеві?'
+];
+
+/* ---------- state ---------- */
+let idx=0;
+let score={plot:0, plotMax:0, sense:0, senseMax:0};
+let answered=false;
+
+const qbody=document.getElementById('qbody');
+const fbEl=document.getElementById('feedback');
+const navRow=document.getElementById('navRow');
+const progLabel=document.getElementById('progLabel');
+const dotsEl=document.getElementById('dots');
+
+document.getElementById('start').onclick=()=>{
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  buildDots();
+  render();
+};
+
+function buildDots(){
+  dotsEl.innerHTML=QUESTIONS.map(()=>'<i></i>').join('');
+}
+function updateDots(){
+  [...dotsEl.children].forEach((d,i)=>{
+    d.className = i<idx?'done':(i===idx?'now':'');
+  });
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function render(){
+  answered=false;
+  fbEl.innerHTML='';
+  navRow.innerHTML='';
+  progLabel.textContent=`Питання ${idx+1} з ${QUESTIONS.length}`;
+  updateDots();
+  const Q=QUESTIONS[idx];
+  const tag = Q.cat==='sense'
+    ? '<span class="tag sense">Розуміння сенсу</span>'
+    : '<span class="tag plot">Події та герої</span>';
+
+  if(Q.type==='mc') renderMC(Q,tag,Q.opts,Q.a);
+  else if(Q.type==='tf') renderMC(Q,tag,['Так, правда ✓','Ні, неправда ✗'],Q.a?0:1);
+  else if(Q.type==='match') renderMatch(Q,tag);
+  else if(Q.type==='order') renderOrder(Q,tag);
+}
+
+/* ----- multiple choice & true/false ----- */
+function renderMC(Q,tag,options,answerIdx){
+  const letters=['А','Б','В','Г'];
+  qbody.innerHTML = tag + `<p class="q">${Q.q}</p><div class="opts">` +
+    options.map((o,i)=>`<button class="opt" data-i="${i}"><span class="mk">${letters[i]||'•'}</span><span>${o}</span></button>`).join('') +
+    `</div>`;
+  qbody.querySelectorAll('.opt').forEach(btn=>{
+    btn.onclick=()=>{
+      if(answered) return; answered=true;
+      const chosen=+btn.dataset.i;
+      const correct = chosen===answerIdx;
+      qbody.querySelectorAll('.opt').forEach((b,i)=>{
+        b.disabled=true;
+        if(i===answerIdx) b.classList.add('correct');
+        if(i===chosen && !correct) b.classList.add('wrong');
+      });
+      addScore(Q.cat, correct?1:0, 1);
+      showFb(correct, Q.why, options[answerIdx]);
+      showNext();
+    };
+  });
+}
+
+/* ----- matching ----- */
+function renderMatch(Q,tag){
+  const rights=shuffle(Q.pairs.map(p=>p.right));
+  qbody.innerHTML = tag + `<p class="q">${Q.q}</p>` +
+    `<p class="hint">Для кожного героя обери правильний опис.</p>` +
+    `<div class="match">` + Q.pairs.map((p,i)=>`
+      <div class="pair" data-i="${i}">
+        <span class="who">${p.left}</span>
+        <select data-i="${i}">
+          <option value="">— обери опис —</option>
+          ${rights.map(r=>`<option value="${r}">${r}</option>`).join('')}
+        </select>
+      </div>`).join('') + `</div>`;
+  const check=document.createElement('button');
+  check.className='btn'; check.textContent='Перевірити';
+  check.onclick=()=>{
+    if(answered) return;
+    const sels=[...qbody.querySelectorAll('select')];
+    if(sels.some(s=>!s.value)){ flashHint('Спочатку обери опис для кожного героя 🙂'); return; }
+    answered=true;
+    let got=0;
+    sels.forEach(s=>{
+      const i=+s.dataset.i; const pair=qbody.querySelector(`.pair[data-i="${i}"]`);
+      const ok = s.value===Q.pairs[i].right;
+      s.disabled=true;
+      pair.classList.add(ok?'correct':'wrong');
+      if(ok) got++;
+      else pair.insertAdjacentHTML('beforeend',`<span class="sol">Правильно: ${Q.pairs[i].right}</span>`);
+    });
+    addScore(Q.cat, got, Q.pairs.length);
+    showFb(got===Q.pairs.length, Q.why, null, `Правильних пар: ${got} з ${Q.pairs.length}`);
+    showNext();
+  };
+  navRow.appendChild(check);
+}
+
+/* ----- ordering ----- */
+function renderOrder(Q,tag){
+  let cur=shuffle(Q.items);
+  // ensure not already perfectly ordered
+  if(cur.join('|')===Q.items.join('|')) cur=shuffle(cur);
+  qbody.innerHTML = tag + `<p class="q">${Q.q}</p>`+
+    `<p class="hint">Користуйся стрілками ▲▼, щоб переставити події.</p><div class="order" id="orderList"></div>`;
+  const list=qbody.querySelector('#orderList');
+  function paint(){
+    list.innerHTML=cur.map((t,i)=>`
+      <div class="item">
+        <span class="num">${i+1}</span>
+        <span class="txt">${t}</span>
+        <span class="arrows">
+          <button data-up="${i}" ${i===0?'disabled':''}>▲</button>
+          <button data-dn="${i}" ${i===cur.length-1?'disabled':''}>▼</button>
+        </span>
+      </div>`).join('');
+    if(answered) return;
+    list.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{const i=+b.dataset.up;[cur[i-1],cur[i]]=[cur[i],cur[i-1]];paint();});
+    list.querySelectorAll('[data-dn]').forEach(b=>b.onclick=()=>{const i=+b.dataset.dn;[cur[i+1],cur[i]]=[cur[i],cur[i+1]];paint();});
+  }
+  paint();
+  const check=document.createElement('button');
+  check.className='btn'; check.textContent='Перевірити';
+  check.onclick=()=>{
+    if(answered) return; answered=true;
+    let got=0;
+    const items=[...list.querySelectorAll('.item')];
+    cur.forEach((t,i)=>{
+      const ok = t===Q.items[i];
+      items[i].classList.add(ok?'correct':'wrong');
+      if(ok) got++;
+    });
+    list.querySelectorAll('button').forEach(b=>b.disabled=true);
+    addScore(Q.cat, got, Q.items.length);
+    showFb(got===Q.items.length, Q.why, null, `На правильних місцях: ${got} з ${Q.items.length}`);
+    showNext();
+  };
+  navRow.appendChild(check);
+}
+
+/* ----- helpers ----- */
+function addScore(cat, got, max){
+  if(cat==='sense'){ score.sense+=got; score.senseMax+=max; }
+  else { score.plot+=got; score.plotMax+=max; }
+}
+function showFb(good, why, correctText, extra){
+  const head = good ? '🎉 Чудово!' : '🤔 Майже!';
+  let body = why;
+  if(!good && correctText) body = `Правильна відповідь: <b>${correctText}</b>. ${why}`;
+  if(extra) body = `${extra}. ${why}`;
+  fbEl.innerHTML=`<div class="fb ${good?'good':'bad'}"><span class="head">${head}</span>${body}</div>`;
+}
+function flashHint(msg){
+  fbEl.innerHTML=`<div class="fb bad"><span class="head">Стривай 🙂</span>${msg}</div>`;
+  setTimeout(()=>{ if(!answered) fbEl.innerHTML=''; },1800);
+}
+function showNext(){
+  navRow.innerHTML='';
+  const b=document.createElement('button');
+  b.className='btn';
+  b.textContent = idx===QUESTIONS.length-1 ? 'Побачити результат ★' : 'Далі →';
+  b.onclick=()=>{ idx++; idx<QUESTIONS.length ? render() : showResults(); };
+  navRow.appendChild(b);
+  b.focus();
+}
+
+/* ---------- results ---------- */
+function showResults(){
+  document.getElementById('quiz').classList.add('hidden');
+  const r=document.getElementById('results');
+  r.classList.remove('hidden');
+  const total=score.plot+score.sense, totalMax=score.plotMax+score.senseMax;
+  const pct=Math.round(total/totalMax*100);
+  const plotPct=Math.round(score.plot/score.plotMax*100);
+  const sensePct=Math.round(score.sense/score.senseMax*100);
+
+  let v,vt;
+  if(pct>=90){v='Ти справжній знавець Бурундука! 🏆';vt='Ти чудово зрозумів(ла), про що ця книжка — і події, і її головну думку.';}
+  else if(pct>=70){v='Ти добре зрозумів(ла) книжку! 🌟';vt='Майже все на місці. Перечитай улюблені розділи — і будеш знати геть усе.';}
+  else if(pct>=50){v='Непогано! 🙂';vt='Основне ти вловив(ла), але дещо варто перечитати ще раз, особливо кінцівку.';}
+  else{v='Давай перечитаємо разом! 📖';vt='Не засмучуйся — книжка непроста. Перечитай її й сміливо спробуй тест ще раз.';}
+
+  const plotNote = plotPct>=80?'Ти добре пам’ятаєш, що і в якому порядку відбувалося.':'Згадай ключові події та героїв — допоможе перечитування.';
+  const senseNote = sensePct>=80?'Ти зрозумів(ла) найважливіше — чому Івась так чинив і чого навчився.':'Подумай ще, чому Івась усе це робив і що він зрозумів у кінці.';
+
+  r.innerHTML = `
+    <p class="score-sub">Твій результат</p>
+    <div class="score-big">${pct}%</div>
+    <p class="score-sub">${total} з ${totalMax} балів</p>
+    <p class="verdict">${v}</p>
+    <p class="verdict-txt">${vt}</p>
+    <div class="bars">
+      <div class="bar plot">
+        <div class="top"><span>📚 Події та герої</span><span>${score.plot}/${score.plotMax}</span></div>
+        <div class="track"><div class="fill" data-w="${plotPct}"></div></div>
+        <div class="note">${plotNote}</div>
+      </div>
+      <div class="bar sense">
+        <div class="top"><span>💡 Розуміння сенсу</span><span>${score.sense}/${score.senseMax}</span></div>
+        <div class="track"><div class="fill" data-w="${sensePct}"></div></div>
+        <div class="note">${senseNote}</div>
+      </div>
+    </div>
+    <div class="reflect">
+      <h3>Поговори про це ✨</h3>
+      <p class="intro">Ці питання не оцінюються — їх цікаво обговорити з мамою, татом чи вчителем:</p>
+      <ol>${REFLECT.map(q=>`<li>${q}</li>`).join('')}</ol>
+    </div>
+    <div class="center" style="margin-top:20px">
+      <button class="btn ghost" id="again">↻ Пройти ще раз</button>
+    </div>`;
+
+  requestAnimationFrame(()=>r.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%'));
+  document.getElementById('again').onclick=()=>{
+    idx=0; score={plot:0,plotMax:0,sense:0,senseMax:0};
+    r.classList.add('hidden');
+    document.getElementById('quiz').classList.remove('hidden');
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
